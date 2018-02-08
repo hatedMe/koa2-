@@ -1,51 +1,52 @@
-
-
-
 const Koa = require('koa');
 const path = require('path');
 const Router = require('koa-router');
-const mongoose = require('mongoose');
-const render = require('koa-ejs');
-
-const login = require('./router/login');
-const register = require('./router/register');
-
-const router = new Router();  // koa-router 7.0以上需要通过 new 的方式
+const multer = require('koa-multer'); //加载koa-multer模块
+const fs = require('fs');
+const upload = multer({dest: '/public/uploads/'});
+const router = new Router();
 const app = new Koa();
 
-render( app,{    // 视图模块
-    root : path.join(__dirname, 'views'),
-    layout: '', 
-    viewExt: 'html' , 
-    cache: false, 
-    debug: false 
-});  
 
-router.get('/', async (ctx,next) =>{
-    await ctx.render( 'login');
+router.get('/', async (ctx, next) => {
+    ctx.body = 'hello word';
 });
 
 
-router.use('/login', login.routes(), login.allowedMethods());
-router.use('/register', register.routes(), register.allowedMethods());
+// 上传
+router.post('/upload', upload.array('image'), async (ctx, next) => {
+    const arrayList = ctx.req.files;
+    // console.log(arrayList);
+    var usrreq = [];
+    const saveImage = e => {
+        let fileFormat = e.originalname.split(".");
+        let imgName = Date.now() + Math.random().toString(36).substr(2, 1) + '.' + fileFormat[fileFormat.length - 1];
+        let filepath = path.join(__dirname, "./public/uploads/" + imgName);
+        return new Promise((resolve, reject) => {
+            fs.rename(e.path, filepath, () => {
+                let ctxBody = {};
+                ctxBody.fileName = imgName;
+                ctxBody.mimetype = e.mimetype;
+                ctxBody.size = e.size;
+                resolve(ctxBody);
+            });
+        });
+    };
+    for (var i = 0; i < arrayList.length; i++) {
+        let lesult = await saveImage(arrayList[i]);
+        usrreq.push(lesult)
+    }
+    ctx.body = {
+        "status": "200",
+        "message": "ok",
+        "data": usrreq
+    }
+});
+
 
 app.use(router.routes()).use(router.allowedMethods());
 
-mongoose.Promise = global.Promise;   // 注册mongoose 使用promise
 
-let db = mongoose.connect(`mongodb://localhost:27020/login`,{useMongoClient: true});   // 连接数据库
-db.once('open',function(){
-    console.info(`listening on port 4006 && 数据库连接成功 =======> ok`);
-    app.listen(4006);
+app.listen(4006 , () =>{
+    console.info(`listening on port 4006 =======> ok`);
 });
-
-
-
-
-
-
-
-
-
-
-

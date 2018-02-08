@@ -1,9 +1,7 @@
 {
   "dependencies": {
-    "koa": "^2.3.0",
-    "koa-body": "^2.5.0",
-    "koa-ejs": "^4.1.0",
-    "koa-router": "^7.2.1",
-    "mongoose": "^4.12.1"
+    "koa": "^2.4.1",
+    "koa-router": "^7.4.0",
+    "mongoose": "^5.0.3"
   }
 }
