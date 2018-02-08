@@ -15,8 +15,14 @@ router.get('/', async (ctx, next) => {
 
 // 上传
 router.post('/upload', upload.array('image'), async (ctx, next) => {
-    const arrayList = ctx.req.files;
-    // console.log(arrayList);
+
+    var base64Data = ctx.req.body.image.replace(/^data:image\/\w+;base64,/, "");
+    var dataBuffer = new Buffer(base64Data, 'base64');
+
+    console.log( dataBuffer );
+
+    const arrayList = ctx.req.body.image;
+    console.log(arrayList);
     var usrreq = [];
     const saveImage = e => {
         let fileFormat = e.originalname.split(".");
