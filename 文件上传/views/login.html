@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>注册登录演示</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <style>
+        h2 { color: red;}
+    </style>
+    <body>
+        <div>
+            <form id="login">
+                <p>登录</p>
+                <input type="text" name="username" placeholder="username" />
+                <input type="password" name="password" />
+                <button>登录</button>
+                <h2></h2>
+            </form>
+        </div>
+        <div>
+            <form id="register">
+                <p>注册</p>
+                <input type="text" name="username" placeholder="username"/>
+                <input type="password" name="password" />
+                <button>注册</button>
+                <h2></h2>
+            </form>
+        </div>
+    </body>
+
+    <script>
+        var login = document.getElementById('login');
+        var register = document.getElementById('register');
+        var btns = document.getElementsByTagName('button');
+        var H2s = document.getElementsByTagName('h2');
+
+        btns[0].addEventListener('click',ev=>{
+            ev.preventDefault();
+            fetch('/login',{
+                method: 'POST',
+                body: {
+                    usernmae : login.username.value,
+                    password : login.password.value
+                }
+            }).then(response=>{
+                return response.json()
+            }).then(data=>{
+                console.log(data);
+                H2s[0].innerHTML = JSON.stringify( data );
+            })
+        },false)
+
+
+
+        btns[1].addEventListener('click',ev=>{
+            ev.preventDefault();
+            fetch('/register',{
+                method: 'POST',
+                body: {
+                    usernmae : login.username.value,
+                    password : login.password.value
+                }
+            }).then(response=>{
+                return response.json()
+            }).then(data=>{
+                console.log(data);
+                H2s[1].innerHTML = JSON.stringify( data );
+            })
+        },false)
+
+        
+
+    </script>
+
+</html>
