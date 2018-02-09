@@ -16,17 +16,12 @@ router.get('/', async (ctx, next) => {
 // 上传
 router.post('/upload', upload.array('image'), async (ctx, next) => {
 
-    var base64Data = ctx.req.body.image.replace(/^data:image\/\w+;base64,/, "");
-    var dataBuffer = new Buffer(base64Data, 'base64');
-
-    console.log( dataBuffer );
-
-    const arrayList = ctx.req.body.image;
-    console.log(arrayList);
+    const arrayList = ctx.req.files;
+    // console.log( arrayList );
     var usrreq = [];
     const saveImage = e => {
         let fileFormat = e.originalname.split(".");
-        let imgName = Date.now() + Math.random().toString(36).substr(2, 1) + '.' + fileFormat[fileFormat.length - 1];
+        let imgName = Date.now() + Math.random().toString(36).substr(2, 1) + '.' + 'jpg'; // fileFormat[fileFormat.length - 1]
         let filepath = path.join(__dirname, "./public/uploads/" + imgName);
         return new Promise((resolve, reject) => {
             fs.rename(e.path, filepath, () => {
