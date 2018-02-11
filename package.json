@@ -1,5 +1,24 @@
 {
+  "name": "koa2-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "dependencies": {
-    "koa-multer": "^1.0.2"
-  }
+    "koa": "^2.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hatedMe/koa2-example.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hatedMe/koa2-example/issues"
+  },
+  "homepage": "https://github.com/hatedMe/koa2-example#readme"
 }
