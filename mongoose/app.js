@@ -9,8 +9,8 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-let db = mongoose.connect(``,{useMongoClient: true});
-db.once('open',function(){
-    console.info(`listening on port 4006 && 数据库连接成功 =======> ok`);
+mongoose.connect(`mongodb://localhost:27017`);
+mongoose.connection.on('connected', function () {    
+    console.log('listening on port 4006 && 数据库连接成功 =======> ok');  
     app.listen( 4006 );
-});
+}); 
