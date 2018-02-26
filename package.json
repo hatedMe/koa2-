@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "jsonwebtoken": "^8.1.1",
     "koa": "^2.4.1",
+    "koa-body": "^2.5.0",
     "koa-ejs": "^4.1.0",
     "koa-router": "^7.4.0",
     "koa-static": "^4.0.2",
-    "mongoose": "^5.0.4"
+    "mongoose": "^5.0.4",
+    "redis": "^2.8.0"
   },
   "devDependencies": {},
   "scripts": {
